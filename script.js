@@ -36,8 +36,7 @@ document.addEventListener("DOMContentLoaded", () => {
        2. NAVBAR SCROLL EFFECT
     ===================================================== */
 
-    const navbar =
-        document.querySelector(".navbar");
+    const navbar = document.querySelector(".navbar");
 
     if (navbar) {
 
@@ -57,11 +56,8 @@ document.addEventListener("DOMContentLoaded", () => {
        3. ACTIVE NAVIGATION
     ===================================================== */
 
-    const sections =
-        document.querySelectorAll("section");
-
-    const navLinks =
-        document.querySelectorAll(".nav-links a");
+    const sections = document.querySelectorAll("section");
+    const navLinks = document.querySelectorAll(".nav-links a");
 
 
     function updateActiveLink() {
@@ -74,8 +70,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 section.offsetTop - 180;
 
             if (window.scrollY >= sectionTop) {
-                currentSection =
-                    section.getAttribute("id");
+
+                const id = section.getAttribute("id");
+
+                if (id) {
+                    currentSection = id;
+                }
+
             }
 
         });
@@ -86,6 +87,7 @@ document.addEventListener("DOMContentLoaded", () => {
             link.classList.remove("active");
 
             if (
+                currentSection &&
                 link.getAttribute("href") ===
                 `#${currentSection}`
             ) {
@@ -101,7 +103,6 @@ document.addEventListener("DOMContentLoaded", () => {
         "scroll",
         updateActiveLink
     );
-
 
     updateActiveLink();
 
@@ -131,7 +132,9 @@ document.addEventListener("DOMContentLoaded", () => {
             document.documentElement.clientHeight;
 
         const progress =
-            (scrollTop / scrollHeight) * 100;
+            scrollHeight > 0
+                ? (scrollTop / scrollHeight) * 100
+                : 0;
 
         progressBar.style.width =
             `${progress}%`;
@@ -140,55 +143,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       5. SCROLL REVEAL
-    ===================================================== */
-
-    const revealElements =
-        document.querySelectorAll(
-            "section, .service-card, .about-content, .work-content, .contact-glass"
-        );
-
-
-    const revealObserver =
-        new IntersectionObserver(
-            (entries) => {
-
-                entries.forEach(entry => {
-
-                    if (entry.isIntersecting) {
-
-                        entry.target.classList.add(
-                            "show"
-                        );
-
-                        revealObserver.unobserve(
-                            entry.target
-                        );
-
-                    }
-
-                });
-
-            },
-            {
-                threshold: 0.12
-            }
-        );
-
-
-    revealElements.forEach(element => {
-
-        element.classList.add("hidden");
-
-        revealObserver.observe(
-            element
-        );
-
-    });
-
-
-    /* =====================================================
-       6. BACK TO TOP
+       5. BACK TO TOP
     ===================================================== */
 
     const backToTop =
@@ -233,20 +188,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       7. HERO TYPING EFFECT
+       6. HERO TEXT EFFECT
     ===================================================== */
 
     const heroText =
-        document.querySelector(".hero p");
+        document.querySelector(".hero-content > p:not(.small-title)");
 
 
     if (heroText) {
 
         const messages = [
-            "نصمم أناقتك...",
-            "نخيط تفاصيلك...",
-            "نصنع هويتك...",
-            "نحوّل أفكارك إلى أزياء..."
+            "نصنع لكِ إطلالتكِ كما تحلمين بها",
+            "نحوّل أفكاركِ إلى أزياء",
+            "تفاصيلكِ تصنع الفرق",
+            "أناقتكِ تبدأ من زَهرة"
         ];
 
         let messageIndex = 0;
@@ -272,7 +227,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
                 if (
-                    characterIndex ===
+                    characterIndex >=
                     currentMessage.length
                 ) {
 
@@ -298,7 +253,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 characterIndex--;
 
 
-                if (characterIndex === 0) {
+                if (characterIndex <= 0) {
+
+                    characterIndex = 0;
 
                     deleting = false;
 
@@ -325,7 +282,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       8. SERVICE CARD 3D
+       7. SERVICE CARD 3D EFFECT
     ===================================================== */
 
     const cards =
@@ -334,58 +291,61 @@ document.addEventListener("DOMContentLoaded", () => {
         );
 
 
-    cards.forEach(card => {
+    if (window.innerWidth > 768) {
 
-        card.addEventListener(
-            "mousemove",
-            e => {
+        cards.forEach(card => {
 
-                const rect =
-                    card.getBoundingClientRect();
+            card.addEventListener(
+                "mousemove",
+                e => {
 
-
-                const x =
-                    e.clientX - rect.left;
-
-                const y =
-                    e.clientY - rect.top;
+                    const rect =
+                        card.getBoundingClientRect();
 
 
-                const rotateX =
-                    ((y - rect.height / 2) /
-                    (rect.height / 2)) * -3;
+                    const x =
+                        e.clientX - rect.left;
+
+                    const y =
+                        e.clientY - rect.top;
 
 
-                const rotateY =
-                    ((x - rect.width / 2) /
-                    (rect.width / 2)) * 3;
+                    const rotateX =
+                        ((y - rect.height / 2) /
+                        (rect.height / 2)) * -3;
 
 
-                card.style.transform =
-                    `perspective(900px)
-                     rotateX(${rotateX}deg)
-                     rotateY(${rotateY}deg)
-                     translateY(-8px)`;
-
-            }
-        );
+                    const rotateY =
+                        ((x - rect.width / 2) /
+                        (rect.width / 2)) * 3;
 
 
-        card.addEventListener(
-            "mouseleave",
-            () => {
+                    card.style.transform =
+                        `perspective(900px)
+                         rotateX(${rotateX}deg)
+                         rotateY(${rotateY}deg)
+                         translateY(-8px)`;
 
-                card.style.transform =
-                    "";
+                }
+            );
 
-            }
-        );
 
-    });
+            card.addEventListener(
+                "mouseleave",
+                () => {
+
+                    card.style.transform = "";
+
+                }
+            );
+
+        });
+
+    }
 
 
     /* =====================================================
-       9. BUTTON RIPPLE
+       8. BUTTON RIPPLE
     ===================================================== */
 
     const buttons =
@@ -402,7 +362,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 const ripple =
                     document.createElement("span");
-
 
                 ripple.className =
                     "ripple";
@@ -455,7 +414,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       10. CURSOR GLOW
+       9. CURSOR GLOW
     ===================================================== */
 
     if (window.innerWidth > 768) {
@@ -488,7 +447,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       11. MAGNETIC BUTTONS
+       10. MAGNETIC BUTTONS
     ===================================================== */
 
     if (window.innerWidth > 768) {
@@ -522,8 +481,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
                     element.style.transform =
-                        `translate(${x * 0.12}px,
-                                   ${y * 0.12}px)`;
+                        `translate(
+                            ${x * 0.12}px,
+                            ${y * 0.12}px
+                        )`;
 
                 }
             );
@@ -533,8 +494,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 "mouseleave",
                 () => {
 
-                    element.style.transform =
-                        "";
+                    element.style.transform = "";
 
                 }
             );
@@ -545,7 +505,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       12. PAGE ENTRANCE
+       11. PAGE ENTRANCE
     ===================================================== */
 
     document.body.classList.add(
@@ -554,7 +514,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       13. CONSOLE MESSAGE
+       12. PREMIUM CONSOLE
     ===================================================== */
 
     console.log(
