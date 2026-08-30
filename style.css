@@ -1449,4 +1449,61 @@ footer > p {
         font-size: 25px;
     }
 }
-```
+/* =====================================================
+   JAVASCRIPT EFFECTS
+===================================================== */
+
+/* Navbar scroll effect */
+.navbar.scrolled {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    backdrop-filter: blur(10px);
+}
+
+
+/* Section reveal animation */
+section.hidden {
+    opacity: 0;
+    transform: translateY(25px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+section.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+
+/* Back to top button */
+.back-to-top {
+    position: fixed;
+    bottom: 25px;
+    left: 25px;
+
+    width: 45px;
+    height: 45px;
+
+    border: none;
+    border-radius: 50%;
+
+    background: var(--pink-deep);
+    color: white;
+
+    font-size: 22px;
+    cursor: pointer;
+
+    opacity: 0;
+    visibility: hidden;
+
+    transition: all 0.3s ease;
+
+    z-index: 999;
+}
+
+.back-to-top.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.back-to-top:hover {
+    transform: translateY(-4px);
+}
