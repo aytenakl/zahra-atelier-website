@@ -69,8 +69,7 @@ The website is designed to be deployed easily using **GitHub Pages**, allowing Z
 ## 🌐 Live Website
 
 **Zahra Atelier:**
-https://aytenakl.github.io/zahra-atelier/
-
+](https://aytenakl.github.io/zahra-atelier-website/)
 ## 👩‍💻 Developed By
 
 **Ayten Ehab Akl**
