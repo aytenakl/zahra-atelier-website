@@ -2,6 +2,11 @@
 document.addEventListener("DOMContentLoaded", () => {
 
     /* =====================================================
+       ZAHRA ATELIER — PREMIUM EXPERIENCE
+    ===================================================== */
+
+
+    /* =====================================================
        1. SMOOTH SCROLLING
     ===================================================== */
 
@@ -31,17 +36,17 @@ document.addEventListener("DOMContentLoaded", () => {
        2. NAVBAR SCROLL EFFECT
     ===================================================== */
 
-    const navbar = document.querySelector(".navbar");
+    const navbar =
+        document.querySelector(".navbar");
 
     if (navbar) {
 
         window.addEventListener("scroll", () => {
 
-            if (window.scrollY > 50) {
-                navbar.classList.add("scrolled");
-            } else {
-                navbar.classList.remove("scrolled");
-            }
+            navbar.classList.toggle(
+                "scrolled",
+                window.scrollY > 50
+            );
 
         });
 
@@ -52,8 +57,12 @@ document.addEventListener("DOMContentLoaded", () => {
        3. ACTIVE NAVIGATION
     ===================================================== */
 
-    const sections = document.querySelectorAll("section");
-    const navLinks = document.querySelectorAll(".nav-links a");
+    const sections =
+        document.querySelectorAll("section");
+
+    const navLinks =
+        document.querySelectorAll(".nav-links a");
+
 
     function updateActiveLink() {
 
@@ -61,13 +70,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
         sections.forEach(section => {
 
-            const sectionTop = section.offsetTop - 180;
+            const sectionTop =
+                section.offsetTop - 180;
 
             if (window.scrollY >= sectionTop) {
-                currentSection = section.getAttribute("id");
+                currentSection =
+                    section.getAttribute("id");
             }
 
         });
+
 
         navLinks.forEach(link => {
 
@@ -84,14 +96,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
     }
 
+
     window.addEventListener(
         "scroll",
         updateActiveLink
     );
 
 
+    updateActiveLink();
+
+
     /* =====================================================
-       4. SCROLL PROGRESS BAR
+       4. SCROLL PROGRESS
     ===================================================== */
 
     const progressBar =
@@ -110,15 +126,15 @@ document.addEventListener("DOMContentLoaded", () => {
         const scrollTop =
             window.scrollY;
 
-        const documentHeight =
+        const scrollHeight =
             document.documentElement.scrollHeight -
             document.documentElement.clientHeight;
 
-        const percentage =
-            (scrollTop / documentHeight) * 100;
+        const progress =
+            (scrollTop / scrollHeight) * 100;
 
         progressBar.style.width =
-            `${percentage}%`;
+            `${progress}%`;
 
     });
 
@@ -195,19 +211,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     window.addEventListener("scroll", () => {
 
-        if (window.scrollY > 400) {
-
-            backToTop.classList.add(
-                "active"
-            );
-
-        } else {
-
-            backToTop.classList.remove(
-                "active"
-            );
-
-        }
+        backToTop.classList.toggle(
+            "active",
+            window.scrollY > 400
+        );
 
     });
 
@@ -241,7 +248,6 @@ document.addEventListener("DOMContentLoaded", () => {
             "نصنع هويتك...",
             "نحوّل أفكارك إلى أزياء..."
         ];
-
 
         let messageIndex = 0;
         let characterIndex = 0;
@@ -278,6 +284,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     );
 
                     return;
+
                 }
 
             } else {
@@ -318,7 +325,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       8. SERVICE CARD 3D EFFECT
+       8. SERVICE CARD 3D
     ===================================================== */
 
     const cards =
@@ -331,7 +338,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         card.addEventListener(
             "mousemove",
-            (e) => {
+            e => {
 
                 const rect =
                     card.getBoundingClientRect();
@@ -344,20 +351,14 @@ document.addEventListener("DOMContentLoaded", () => {
                     e.clientY - rect.top;
 
 
-                const centerX =
-                    rect.width / 2;
-
-                const centerY =
-                    rect.height / 2;
-
-
                 const rotateX =
-                    ((y - centerY) /
-                        centerY) * -3;
+                    ((y - rect.height / 2) /
+                    (rect.height / 2)) * -3;
+
 
                 const rotateY =
-                    ((x - centerX) /
-                        centerX) * 3;
+                    ((x - rect.width / 2) /
+                    (rect.width / 2)) * 3;
 
 
                 card.style.transform =
@@ -375,7 +376,7 @@ document.addEventListener("DOMContentLoaded", () => {
             () => {
 
                 card.style.transform =
-                    "perspective(900px) rotateX(0) rotateY(0) translateY(0)";
+                    "";
 
             }
         );
@@ -384,7 +385,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       9. BUTTON RIPPLE EFFECT
+       9. BUTTON RIPPLE
     ===================================================== */
 
     const buttons =
@@ -400,9 +401,7 @@ document.addEventListener("DOMContentLoaded", () => {
             function (e) {
 
                 const ripple =
-                    document.createElement(
-                        "span"
-                    );
+                    document.createElement("span");
 
 
                 ripple.className =
@@ -432,6 +431,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     rect.left -
                     size / 2}px`;
 
+
                 ripple.style.top =
                     `${e.clientY -
                     rect.top -
@@ -443,11 +443,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 );
 
 
-                setTimeout(() => {
-
-                    ripple.remove();
-
-                }, 600);
+                setTimeout(
+                    () => ripple.remove(),
+                    600
+                );
 
             }
         );
@@ -456,15 +455,110 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       10. CONSOLE MESSAGE
+       10. CURSOR GLOW
+    ===================================================== */
+
+    if (window.innerWidth > 768) {
+
+        const cursorGlow =
+            document.createElement("div");
+
+        cursorGlow.className =
+            "cursor-glow";
+
+        document.body.appendChild(
+            cursorGlow
+        );
+
+
+        document.addEventListener(
+            "mousemove",
+            e => {
+
+                cursorGlow.style.left =
+                    `${e.clientX}px`;
+
+                cursorGlow.style.top =
+                    `${e.clientY}px`;
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       11. MAGNETIC BUTTONS
+    ===================================================== */
+
+    if (window.innerWidth > 768) {
+
+        const magneticElements =
+            document.querySelectorAll(
+                ".primary, .luxury-btn"
+            );
+
+
+        magneticElements.forEach(element => {
+
+            element.addEventListener(
+                "mousemove",
+                e => {
+
+                    const rect =
+                        element.getBoundingClientRect();
+
+
+                    const x =
+                        e.clientX -
+                        rect.left -
+                        rect.width / 2;
+
+
+                    const y =
+                        e.clientY -
+                        rect.top -
+                        rect.height / 2;
+
+
+                    element.style.transform =
+                        `translate(${x * 0.12}px,
+                                   ${y * 0.12}px)`;
+
+                }
+            );
+
+
+            element.addEventListener(
+                "mouseleave",
+                () => {
+
+                    element.style.transform =
+                        "";
+
+                }
+            );
+
+        });
+
+    }
+
+
+    /* =====================================================
+       12. PAGE ENTRANCE
+    ===================================================== */
+
+    document.body.classList.add(
+        "page-loaded"
+    );
+
+
+    /* =====================================================
+       13. CONSOLE MESSAGE
     ===================================================== */
 
     console.log(
-        "🌸 Welcome to Zahra Atelier"
-    );
-
-    console.log(
-        "✨ Premium website experience loaded"
+        "🌸 Zahra Atelier Premium Experience Loaded"
     );
 
 });
